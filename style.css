@@ -1,0 +1,34 @@
+section#eu-cookie-compliance .content-pad{
+padding-top:0;
+padding-bottom:0;
+}
+section#eu-cookie-compliance {text-align:center;}
+section#eu-cookie-compliance p{ padding: 10px; margin:0; }
+section#eu-cookie-compliance a#eucc-hidebutton {}
+/*section#eu-cookie-compliance {display:none;}*/
+
+section#eu-cookie-compliance img#eucc-closeicon{float:right; cursor: pointer;}
+
+section#eu-cookie-compliance span#eucc-accept-cookies{
+color: #FFFFFF;
+text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+border-radius:4px;
+float:right;
+background-color:#5BB75B;
+cursor:pointer;
+display:inline-block;
+padding:1px 10px;
+vertical-align:middle;
+text-align:center;
+background:#5BB75B; /* Old browsers */
+background: -moz-linear-gradient(top,  #62c462 0%, #51a351 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#62c462), color-stop(100%,#51a351)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(top,  #62c462 0%,#51a351 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top,  #62c462 0%,#51a351 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(top,  #62c462 0%,#51a351 100%); /* IE10+ */
+background: linear-gradient(top,  #62c462 0%,#51a351 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#62c462', endColorstr='#51a351',GradientType=0 ); /* IE6-9 */
+}
+section#eu-cookie-compliance span#eucc-accept-cookies:hover{
+background:#5BB75B;
+}
