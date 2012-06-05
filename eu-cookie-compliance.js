@@ -22,29 +22,29 @@ for (i=0;i<ARRcookies.length;i++)
 }
 function EuccCheckCookie(requireAccept){
 var cookieconsent=EuccGetCookie("eucookiecompliance");
-  if (cookieconsent == 'implied' || cookieconsent == 'accepted'){
-	jQuery("section#eu-cookie-compliance").remove();
+if (cookieconsent == 'implied' || cookieconsent == 'accepted'){
+	jQuery("#eu-cookie-compliance").remove();
   }
 else 
   {
 	jQuery("#eu-cookie-compliance").show();
 	
-	if (!requireAccept){
+	if (requireAccept == 'implied'){
     EuccSetCookie("eucookiecompliance",'implied',365);
 	}
   }
 }
 /* code to hide the notice on click */
 jQuery(document).ready(function() {
-	jQuery("span#eucc-hidebutton").click(function () {
-	jQuery("section#eu-cookie-compliance").remove();
+	jQuery("#eucc-closeicon").click(function () {
+	jQuery("#eu-cookie-compliance").remove();
 	});
 });
 
 /* code to hide the notice and save cookie if acceptance needed */
 jQuery(document).ready(function() {
-	jQuery("span#eucc-hidebutton").click(function () {
-	jQuery("section#eu-cookie-compliance").remove();
+	jQuery(".eucc-hidebutton").click(function () {
+	jQuery("#eu-cookie-compliance").remove();
 	EuccSetCookie("eucookiecompliance",'accepted',365);
 	});
 });

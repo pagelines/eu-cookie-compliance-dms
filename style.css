@@ -1,15 +1,20 @@
-section#eu-cookie-compliance .content-pad{
+#eu-cookie-compliance .content-pad{
 padding-top:0;
 padding-bottom:0;
 }
-section#eu-cookie-compliance {text-align:center;}
-section#eu-cookie-compliance p{ padding: 10px; margin:0; }
-section#eu-cookie-compliance a#eucc-hidebutton {}
-/*section#eu-cookie-compliance {display:none;}*/
+#eu-cookie-compliance {text-align:center;}
+#eu-cookie-compliance p{ 
+padding: 10px; 
+margin:0;
+float:left;
+width:100%;
+}
+#eu-cookie-compliance a#eucc-hidebutton {}
+/*#eu-cookie-compliance {display:none;}*/
 
-section#eu-cookie-compliance img#eucc-closeicon{float:right; cursor: pointer;}
+#eu-cookie-compliance img#eucc-closeicon{float:right; cursor: pointer;}
 
-section#eu-cookie-compliance span#eucc-accept-cookies{
+#eu-cookie-compliance span#eucc-accept-cookies{
 color: #FFFFFF;
 text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 border-radius:4px;
@@ -29,6 +34,8 @@ background: -ms-linear-gradient(top,  #62c462 0%,#51a351 100%); /* IE10+ */
 background: linear-gradient(top,  #62c462 0%,#51a351 100%); /* W3C */
 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#62c462', endColorstr='#51a351',GradientType=0 ); /* IE6-9 */
 }
-section#eu-cookie-compliance span#eucc-accept-cookies:hover{
+#eu-cookie-compliance span#eucc-accept-cookies:hover{
 background:#5BB75B;
 }
+
+.eucc-center{display:block; margin:0 auto;}

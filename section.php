@@ -2,12 +2,14 @@
 /*
 Section: EU Cookie Compliance
 Author: Ryan Varley
-Author URI: http://www.ryanvarley.co.uk
+Author URI: http://ryanvarley.co.uk
 Version: 1.0
-Description: a box will appear to tell new visitors that you use cookies and how to disable them.
+Description: Displays a banner to new visitors about your sites use of cookies.
+Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
+External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/
 Class Name: EUCookieCompliance
 Cloning: False
-_Workswith: header
+Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
 */
 
 class EUCookieCompliance extends PageLinesSection {    
@@ -21,8 +23,9 @@ class EUCookieCompliance extends PageLinesSection {
         $euccBoxText = ( ploption('eucc_BoxText', $this->oset) ) ? ploption('eucc_BoxText', $this->oset) : false;
         $euccPrivacyPolicyLink = ( ploption('eucc_PrivacyPolicyLink', $this->oset) ) ? ploption('eucc_PrivacyPolicyLink', $this->oset) : false;
         $euccCloseButtonImage = ( ploption('eucc_CloseButtonImage', $this->oset) ) ? ploption('eucc_CloseButtonImage', $this->oset) : false;
-        $euccAcceptMode = ( ploption('eucc_RequireAccept', $this->oset) ) ? ploption('eucc_RequireAccept', $this->oset) : false;
+        $euccAcceptMode = ( ploption('eucc_RequireAccept', $this->oset) ) ? ploption('eucc_RequireAccept', $this->oset) : 'implied';
         $euccDevMode = ( ploption('eucc_DevMode', $this->oset) ) ? ploption('eucc_DevMode', $this->oset) : false;
+		$euccAcceptButtonText = ( ploption('eucc_AcceptButtonText', $this->oset) ) ? ploption('eucc_AcceptButtonText', $this->oset) : "I Accept";
  
  
         $euccCustomCloseButton = true; //a switch for later
@@ -34,24 +37,15 @@ class EUCookieCompliance extends PageLinesSection {
         
         if($euccAcceptMode == 'acceptance'){ $euccRequireAccept = true; } else{ $euccRequireAccept = false;} //another switch
         
-        /* # should be persistent (i think)
-        if($euccDevMode){
-            function euccDevModeNotice(){
-                echo '<div class="updated"><p>EU Cookie Compliance DevMode has been enabled. The banner WILL NOT vanish untill you remove this setting.</p></div>';
-            add_action('admin_notices', 'euccDevModeNotice');
-            }
-        }
-        */
-        
         // If needed values arent set then notify user
-        if(!$euccPrivacyPolicyLink && $euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
+        if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
       
-        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<span id="eucc-accept-cookies">I Accept</span>';}
-        else{ $euccCloseButton = '<img id="eucc-closeicon" src="'.$euccCloseButtonImage.'"/>'; } // if implied or custom button output image
+        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<span id="eucc-accept-cookies" class="eucc-hidebutton">'.$euccAcceptButtonText.'</span>';}
+        else{ $euccCloseButton = '<span class="eucc-hidebutton"><img id="eucc-closeicon" src="'.$euccCloseButtonImage.'"/></span>'; } // if implied or custom button output image
         
         // start output
         ?><p><?php
-        
+		
         if ($euccBoxText){
             printf($euccBoxText);
         }
@@ -59,8 +53,8 @@ class EUCookieCompliance extends PageLinesSection {
             ?>
             This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a href="<?php echo $euccPrivacyPolicyLink; ?>">Find out more here.</a><?php
         }
-        ?>
-        <span id="eucc-hidebutton"><?php echo $euccCloseButton ?></span></p>
+		echo $euccCloseButton;
+         ?></p>
         
         <?php if(!$euccDevMode){ ?><script type='text/javascript'>EuccCheckCookie('<?php echo $euccAcceptMode; ?>');</script><?php } //output script variable
     }
@@ -73,7 +67,7 @@ class EUCookieCompliance extends PageLinesSection {
                 'eucc_BoxText'     => array(
                     'type'             => 'textarea',
                     'inputlabel'    => 'Box Text',
-                    'title'         => 'The text to be displayed',
+                    'title'         => 'The text to be displayed (optional)',
                     'shortexp'        => 'Replace the text displayed in the message. Note: doing this renders the privacy policy link obsolete. You should include your own link with HTML.',
                 ),
                 'eucc_PrivacyPolicyLink'     => array(
@@ -85,8 +79,8 @@ class EUCookieCompliance extends PageLinesSection {
                 'eucc_CloseButtonImage'     => array(
                     'type'             => 'image_upload',
                     'inputlabel'    => 'close/hide image',
-                    'title'         => 'Replace the close button with your own image',
-                    'shortexp'        => 'This will be used for the vistor to hide the message (implied consent) or replace the accept button (acceptance). Unless your message spans multiple lines the max size is 23px in height',
+                    'title'         => 'Replace the close button with your own image (optional)',
+                    'shortexp'        => 'This will be used for the visitor to hide the message (implied consent) or replace the accept button (acceptance). Unless your message spans multiple lines the max size is 23px in height',
                 ),
                 'eucc_RequireAccept'     => array(
                     'type'             => 'radio',
@@ -94,16 +88,22 @@ class EUCookieCompliance extends PageLinesSection {
                     'title'         => 'Require user to accept to hide or take implied consent',
                     'default'    => 'implied_consent',
                     'selectvalues'    => array(
-                                'implied_consent'    => array('name' => 'Implied consent'),
+                                'implied'    => array('name' => 'Implied consent'),
                                 'acceptance'    => array('name' => 'Acceptance'), 
                                         ), 
                     'shortexp'        => 'You can either show the banner once and if the user takes no action, assume implied consent or you can require the user actually consent to remove the banner.',
+                ),
+				'eucc_AcceptButtonText'     => array(
+                    'type'             => 'text',
+                    'inputlabel'    => 'Accept button text',
+                    'title'         => 'Accept button text (optional)',
+                    'shortexp'        => 'The text that will display on the accept button when the \'acceptance\' mode has been selected',
                 ),
                 'eucc_DevMode'     => array(
                     'type'             => 'check',
                     'inputlabel'    => 'Enabled',
                     'title'         => 'Make the banner always display for testing purposes',
-                    'shortexp'        => 'This will stop the banner from being permantly hidden. This effects ALL users and you should turn it off before deployment',
+                    'shortexp'        => 'This will stop the banner from being permanently hidden. This affects ALL users and you should turn it off before deployment',
                 )
             );
 
