@@ -3,7 +3,7 @@
 Section: EU Cookie Compliance
 Author: Ryan Varley
 Author URI: http://ryanvarley.co.uk
-Version: 1.1
+Version: 1.0
 Description: Displays a banner to new visitors about your sites use of cookies.
 Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
 External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/

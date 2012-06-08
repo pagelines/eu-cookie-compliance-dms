@@ -13,8 +13,6 @@ This section is designed only to *help you meet EU regulations* and *does not en
 (if your setup requires these please only buy the section when they are included. In the meantime send me an email to let me knows its important!)
 * Display Banner only to EU visitors
 * More customization options
-
- 
  
 == Changelog ==
 = 1.0 =
