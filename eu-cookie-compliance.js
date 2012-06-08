@@ -36,7 +36,7 @@ else
 }
 /* code to hide the notice on click */
 jQuery(document).ready(function() {
-	jQuery("#eucc-closeicon").click(function () {
+	jQuery(".eucc-closeicon").click(function () {
 	jQuery("#eu-cookie-compliance").remove();
 	});
 });

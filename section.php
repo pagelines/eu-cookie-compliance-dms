@@ -3,12 +3,12 @@
 Section: EU Cookie Compliance
 Author: Ryan Varley
 Author URI: http://ryanvarley.co.uk
-Version: 1.0
+Version: 1.1
 Description: Displays a banner to new visitors about your sites use of cookies.
 Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
 External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/
 Class Name: EUCookieCompliance
-Cloning: False
+Cloning: false
 Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
 */
 
@@ -20,31 +20,48 @@ class EUCookieCompliance extends PageLinesSection {
         }
 
     function section_template( $clone_id = null ) {
+	
+		//set variables for ease
         $euccBoxText = ( ploption('eucc_BoxText', $this->oset) ) ? ploption('eucc_BoxText', $this->oset) : false;
         $euccPrivacyPolicyLink = ( ploption('eucc_PrivacyPolicyLink', $this->oset) ) ? ploption('eucc_PrivacyPolicyLink', $this->oset) : false;
         $euccCloseButtonImage = ( ploption('eucc_CloseButtonImage', $this->oset) ) ? ploption('eucc_CloseButtonImage', $this->oset) : false;
         $euccAcceptMode = ( ploption('eucc_RequireAccept', $this->oset) ) ? ploption('eucc_RequireAccept', $this->oset) : 'implied';
         $euccDevMode = ( ploption('eucc_DevMode', $this->oset) ) ? ploption('eucc_DevMode', $this->oset) : false;
 		$euccAcceptButtonText = ( ploption('eucc_AcceptButtonText', $this->oset) ) ? ploption('eucc_AcceptButtonText', $this->oset) : "I Accept";
- 
- 
-        $euccCustomCloseButton = true; //a switch for later
-        
+		$euccButtonPosition = ( ploption('eucc_ButtonPosition', $this->oset) ) ? ploption('eucc_ButtonPosition', $this->oset) : "top-right";
+		
+		// If needed values arent set then notify user
+        if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
+		
+		// Start section
+		
+		// define the close button (or trigger generation later)
+        $euccCustomCloseButton = true;
+  
         if(!$euccCloseButtonImage){
         $euccCloseButtonImage = $this->base_url.'/close.png';
         $euccCustomCloseButton = false;
         }
         
-        if($euccAcceptMode == 'acceptance'){ $euccRequireAccept = true; } else{ $euccRequireAccept = false;} //another switch
-        
-        // If needed values arent set then notify user
-        if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
+		// a switch for later
+        if($euccAcceptMode == 'acceptance'){ $euccRequireAccept = true; } else{ $euccRequireAccept = false;}
+		
+		// add a class for the bottom-center layout mode
+		if ($euccButtonPosition == 'bottom-center'){$euccExtraButtonClass ='eucc-ownline';}
+		else {$euccExtraButtonClass ='';}
       
-        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<span id="eucc-accept-cookies" class="eucc-hidebutton">'.$euccAcceptButtonText.'</span>';}
-        else{ $euccCloseButton = '<span class="eucc-hidebutton"><img id="eucc-closeicon" src="'.$euccCloseButtonImage.'"/></span>'; } // if implied or custom button output image
+	  
+		// set the close button variable depending on options
+		
+		//
+		//if ($euccButtonPosition = 'center-right') {$euccCloseButton = '<span class="eucc-hidebutton eucc-center-right" style="background-image:url(\''.$euccCloseButtonImage.'\');"></span>';}
+        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<span class="eucc-accept-cookies eucc-hidebutton '.$euccExtraButtonClass.'">'.$euccAcceptButtonText.'</span>';}
+        else{ $euccCloseButton = '<span class="eucc-hidebutton '.$euccExtraButtonClass.'"><img class="eucc-closeicon" src="'.$euccCloseButtonImage.'"/></span>'; } // if implied or custom button output image
         
         // start output
         ?><p><?php
+		
+		if($euccButtonPosition == 'top-right' || $euccButtonPosition == 'center-right') {echo $euccCloseButton;}
 		
         if ($euccBoxText){
             printf($euccBoxText);
@@ -53,12 +70,13 @@ class EUCookieCompliance extends PageLinesSection {
             ?>
             This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a href="<?php echo $euccPrivacyPolicyLink; ?>">Find out more here.</a><?php
         }
-		echo $euccCloseButton;
+		if($euccButtonPosition == 'bottom-right' || $euccButtonPosition == 'bottom-center') {echo $euccCloseButton;}
          ?></p>
         
         <?php if(!$euccDevMode){ ?><script type='text/javascript'>EuccCheckCookie('<?php echo $euccAcceptMode; ?>');</script><?php } //output script variable
     }
-        
+    
+	
     function section_optionator( $settings ){
             
             $settings = wp_parse_args($settings, $this->optionator_default);
@@ -88,11 +106,24 @@ class EUCookieCompliance extends PageLinesSection {
                     'title'         => 'Require user to accept to hide or take implied consent',
                     'default'    => 'implied_consent',
                     'selectvalues'    => array(
-                                'implied'    => array('name' => 'Implied consent'),
-                                'acceptance'    => array('name' => 'Acceptance'), 
+                                'implied'    => array('name' => 'Implied consent (default)'),
+                                'acceptance'    => array('name' => 'Required consent'), 
                                         ), 
                     'shortexp'        => 'You can either show the banner once and if the user takes no action, assume implied consent or you can require the user actually consent to remove the banner.',
                 ),
+				'eucc_ButtonPosition' => array(
+					'default' 		=> 'top-right',
+					'type' 			=> 'radio',
+					'selectvalues' => array(
+						'top-right' 		=> array('name' => 'Top Right (default)'),
+						//'center-right' 		=> array('name' => 'Center Right'), # future
+						'bottom-right' 		=> array('name' => 'Bottom Right'),
+						'bottom-center' 		=> array('name' => 'Bottom Center'),						
+					),
+					'inputlabel' 	=> 'Position',
+					'title' 		=> 'Button Position',
+					'shortexp' 		=> 'Choose where you want the button to display on your banner (this mainly effects multi-line banners)',
+				),
 				'eucc_AcceptButtonText'     => array(
                     'type'             => 'text',
                     'inputlabel'    => 'Accept button text',
@@ -102,8 +133,8 @@ class EUCookieCompliance extends PageLinesSection {
                 'eucc_DevMode'     => array(
                     'type'             => 'check',
                     'inputlabel'    => 'Enabled',
-                    'title'         => 'Make the banner always display for testing purposes',
-                    'shortexp'        => 'This will stop the banner from being permanently hidden. This affects ALL users and you should turn it off before deployment',
+                    'title'         => 'Dev Mode',
+                    'shortexp'        => 'This will stop the banner from being permanently hidden for testing purposes. This affects ALL users and you should turn it off before deployment',
                 )
             );
 
