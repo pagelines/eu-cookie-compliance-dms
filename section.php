@@ -1,15 +1,16 @@
 <?php
 /*
-Section: EU Cookie Compliance
-Author: Ryan Varley
-Author URI: http://ryanvarley.co.uk
-Version: 1.0
-Description: Displays a banner to new visitors about your sites use of cookies.
-Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
-External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/
-Class Name: EUCookieCompliance
-Cloning: false
-Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
+	Section: EU Cookie Compliance
+	Author: Ryan Varley
+	Author URI: http://ryanvarley.co.uk
+	Description: Displays a banner to new visitors about your sites use of cookies.
+	Class Name: EUCookieCompliance
+	Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
+	Compatibility: 2.1+
+	Version: 1.0
+	External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/
+	Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
+	Cloning: false
 */
 
 class EUCookieCompliance extends PageLinesSection {    
