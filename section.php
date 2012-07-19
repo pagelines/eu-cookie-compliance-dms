@@ -7,7 +7,7 @@
 	Class Name: EUCookieCompliance
 	Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
 	Compatibility: 2.1+
-	Version: 1.0
+	Version: 1.0.1
 	External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/
 	Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
 	Cloning: false
@@ -17,7 +17,7 @@ class EUCookieCompliance extends PageLinesSection {
 
     function section_head(){ # Load the javascript and any associated variables.
     $euccDevMode = ( ploption('eucc_DevMode', $this->oset) ) ? ploption('eucc_DevMode', $this->oset) : false;
-            if(!$euccDevMode){ ?> <script type='text/javascript' src='<?php echo $this->base_url;?>/eu-cookie-compliance.js'></script><?php }
+            if(!$euccDevMode){ ?> <script type='text/javascript' src='<?php echo $this->base_url;?>/eu-cookie-compliance.js?ver=1.0.1'></script><?php }
         }
 
     function section_template( $clone_id = null ) {

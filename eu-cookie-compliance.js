@@ -1,3 +1,4 @@
+// Version 1.0
 function EuccSetCookie(c_name,value,exdays)
 {
 var exdate=new Date();
