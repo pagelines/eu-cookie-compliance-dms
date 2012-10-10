@@ -5,6 +5,7 @@
 # specfic
 documentation/
 *.psd
+raw/
 
 *.pydevproject
 .project
