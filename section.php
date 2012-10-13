@@ -13,7 +13,14 @@
     Cloning: false
 */
 
-class EUCookieCompliance extends PageLinesSection {    
+class EUCookieCompliance extends PageLinesSection {
+
+    // function section_persistent(){
+			// build_passive_section(array('sid' => $this->class_name));
+			
+			// add_action('pagelines_before_page', array(&$this,'passive_section_template'), 9, 2);
+		// }
+    
 
     function section_head(){ # Load the javascript and any associated variables.
     

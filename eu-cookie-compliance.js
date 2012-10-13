@@ -1,4 +1,4 @@
-// Version 1.0
+// Version 2.0
 function EuccSetCookie(c_name,value,exdays)
 {
 var exdate=new Date();
@@ -69,26 +69,24 @@ function euccSetWidth(){
     var iconMargin = (jQuery(".eucc-container").height() - iconHeight)/2;
     
     jQuery(".eucc-closeicon").css('margin-top',iconMargin + "px");
-    
-    
-    // document.write('<p>cont: ' + containerWidth + '<br>icon: ' + closeIconWidth + '<br>para: ' + paraWidth 
-    // + '<br>NewPara: ' + newParaWidth + '<br>marg: ' + iconMargin + '<br>iconh: ' + iconHeight + '<br>conth: ' + jQuery(".eucc-container").height()
-    // + '</p> ');
     }
     
 function euccPosition(euccPos){ // perhaps call in the function that shows the section
     
     if(euccPos == "top-float" || euccPos == "bottom-float") {
+    
+        var sectionHeight = jQuery("#eu-cookie-compliance").height()
+    
         jQuery("#eu-cookie-compliance").addClass("eucc-float eucc-bgcolor"); // eucc-bgcolor is normal theme
         jQuery(".eucc-container").removeClass("eucc-bgcolor"); // remove the inner class bg
         
-        if(euccPos == "top-float"){floatPosition = "top";}
+        if(euccPos == "top-float"){
+            floatPosition = "top";
+            if (jQuery("#navbar.fixed-top").length ) {jQuery("#navbar.fixed-top").css('margin-top',sectionHeight + "px"); }
+        }
         if(euccPos == "bottom-float"){floatPosition = "bottom";}
         
-        jQuery("#eu-cookie-compliance").css(floatPosition,0);
-        
-        var sectionHeight = jQuery("#eu-cookie-compliance").height()
-        jQuery("body").css("margin-"+floatPosition,sectionHeight)
+        jQuery('#site').prepend(jQuery('#eu-cookie-compliance')); 
     }
     
     
@@ -99,7 +97,7 @@ function euccTheme(euccTheme){
     // a function or global to return weather float or not so the right class can be selected 
     
     addClassName = "#eu-cookie-compliance";
-    addClassName = ".eucc-container";
+    //addClassName = ".eucc-container";
 
     if(euccTheme != 'std-flat'){
     jQuery(".eucc-container").removeClass("eucc-bgcolor");
