@@ -14,14 +14,7 @@
 */
 
 class EUCookieCompliance extends PageLinesSection {
-
-    // function section_persistent(){
-			// build_passive_section(array('sid' => $this->class_name));
-			
-			// add_action('pagelines_before_page', array(&$this,'passive_section_template'), 9, 2);
-		// }
     
-
     function section_head(){ # Load the javascript and any associated variables.
         
         // Output user set JS variables and the header script
@@ -47,6 +40,8 @@ class EUCookieCompliance extends PageLinesSection {
         $bannerTheme = ( ploption('eucc_BannerTheme', $this->oset) ) ? ploption('eucc_BannerTheme', $this->oset) : "navbar-black";
         $customJs = '';
         
+        $PLVERSION =  explode(".",explode("-",CORE_VERSION)[0]);
+        
         // If needed values arent set then notify user
         if(!$privacyPolicyLink && !$boxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
         
@@ -55,8 +50,15 @@ class EUCookieCompliance extends PageLinesSection {
     // Start section code
         
         // Generate Close Button
-        if ($acceptMode == 'acceptance'){ $closeIcon = sprintf('<a class="btn btn-success btn-mini">%s</a>',$acceptButtonText); }
-        else { $closeIcon = '<i class="icon-remove"></i>'; } // another option if pagelines < 2.3 - perhaps a filter for legacy?
+        if ($closeButtonImage) {$closeIcon = sprintf('<img src="%s">',$closeButtonImage);}
+        
+        else if ($acceptMode == 'acceptance'){ $closeIcon = sprintf('<a class="btn btn-success btn-mini">%s</a>',$acceptButtonText); }
+        
+        else if ($PLVERSION[0] == 2 && $PLVERSION[1] < 3) {$closeIcon = sprintf('<img src="%s/close.png">',$this->base_url);}
+        
+        else { $closeIcon = '<i class="icon-remove"></i>'; }
+        
+        
         
         // final output
         printf('

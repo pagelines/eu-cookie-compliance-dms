@@ -1,6 +1,6 @@
 #eu-cookie-compliance {
 
-    //display: hidden;
+    display: hidden;
     
     .content-pad{
     padding-top:0;
@@ -44,13 +44,21 @@
     z-index:5000;
 }
 
+.eucc-float-bottom {
+    bottom:0;
+}
+
 .eucc-navbar { 
 
         box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 1px 3px rgba(0, 0, 0, 0.25);
 
-        .eucc-p { 
+        .eucc-p, .eucc-p a { 
         color: rgba(255, 255, 255, 0.8); 
         text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+        }
+        .eucc-p a { 
+        text-decoration: underline; 
+        &hover {color: @pl-link;}
         }
     }
 
@@ -68,11 +76,11 @@
 
 .eucc-grey {
     #gradient > .vertical(#ffffff, #dcdcdc);
-	.eucc-p { color: rgba(0,0,0,.6); text-shadow: 0 1px 0 rgba(255,255,255,1);}
+	.eucc-p, .eucc-p a { color: rgba(0,0,0,.6); text-shadow: 0 1px 0 rgba(255,255,255,1);}
 }
 
 .eucc-orange {
-    .eucc-p {color: @euccNavBarFontColor;}
+    .eucc-p, .eucc-p a {color: @euccNavBarFontColor;}
     #gradient > .vertical(#fbb450, #f89406);
 }
 

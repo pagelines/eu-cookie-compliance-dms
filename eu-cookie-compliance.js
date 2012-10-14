@@ -56,6 +56,7 @@ function euccGetVariables() {
     euccObj.iconMargin = parseInt((jQuery(".eucc-container").height() - euccObj.iconHeight)/2);
     euccObj.sectionHeight = parseInt(jQuery("#eu-cookie-compliance").height());
     euccObj.fixedNavbar = false;
+    euccObj.bottomMargin = false;
 }
 
 function euccCloseBanner() {
@@ -63,6 +64,7 @@ function euccCloseBanner() {
     jQuery("#eu-cookie-compliance").remove();
     
     if (euccObj.fixedNavbar) {jQuery("#navbar.fixed-top").css('margin-top',0);}
+    if (euccObj.bottomMargin) {jQuery("#site").css('margin-bottom',0);}
     
     if (euccObj.requireAccept == "acceptance"){EuccSetCookie("eucookiecompliance",'accepted',365);}
     
@@ -99,7 +101,9 @@ function euccPosition(euccPos){
             jQuery('#site').prepend(jQuery('#eu-cookie-compliance'));
         }
         if(euccPos == "bottom-float"){
-            jQuery('#site').append(jQuery('#eu-cookie-compliance'));
+            jQuery("#eu-cookie-compliance").addClass("eucc-float-bottom");
+            jQuery("#site").css('margin-bottom',euccObj.sectionHeight + "px");
+            euccObj.bottomMargin = true;
         }
         
          
@@ -120,7 +124,7 @@ function euccTheme(euccTheme){
     }
 
     if(euccTheme == 'std-trans'){
-        jQuery(addClassName).addClass("eucc-navbar eucc-trans");
+        jQuery(addClassName).addClass("eucc-trans");
     }
 
     if(euccTheme == 'navbar-black'){
