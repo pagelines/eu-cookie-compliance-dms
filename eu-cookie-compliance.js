@@ -1,4 +1,7 @@
-// Version 2.0
+// Version 2.0 by Ryan Varley (http://ryanvarley.co.uk)
+// For use only with licensed versions of Eu Cookie Compliance for PageLines
+// If you have bought a licence you may modify and use it how you wish but not sell it
+euccObj=new Object();
 function EuccSetCookie(c_name,value,exdays)
 {
 var exdate=new Date();
@@ -22,72 +25,86 @@ for (i=0;i<ARRcookies.length;i++)
   }
 }
 function euccCheckCookie(requireAccept){
-var cookieconsent=EuccGetCookie("eucookiecompliance");
-
-//if (typeof EuccDevMode != 'undefined') {
-    if (cookieconsent == 'implied' || cookieconsent == 'accepted'){
-        //jQuery("#eu-cookie-compliance").remove();
-      }
-//}
-else 
-  {
-    jQuery("#eu-cookie-compliance").show();
+    euccObj.requireAccept = requireAccept;
+    var cookieconsent=EuccGetCookie("eucookiecompliance");
     
-    if (requireAccept == 'implied'){
-    EuccSetCookie("eucookiecompliance",'implied',365);
+    if (euccObj.devMode == "on") {cookieconsent = 'DevMode';}
+
+    if (cookieconsent == 'implied' || cookieconsent == 'accepted'){
+            jQuery("#eu-cookie-compliance").remove();
+        }
+    else 
+    {
+        jQuery("#eu-cookie-compliance").show();
+        euccGetVariables();
+        euccSetWidth();
+        euccPosition(euccObj.euccPos);
+        euccTheme(euccObj.euccTheme);
+        
+        if (requireAccept == 'implied' && euccObj.devMode != "on"){
+        EuccSetCookie("eucookiecompliance",'implied',365);
+        }
     }
+    
+}
+function euccGetVariables() {
+    euccObj.containerWidth = parseInt(jQuery(".eucc-container").width());
+    euccObj.closeIconWidth = parseInt(jQuery(".eucc-closeicon").width());
+    euccObj.paraWidth = parseInt(jQuery(".eucc-p").width());
+    euccObj.newParaWidth = parseInt(euccObj.containerWidth - euccObj.closeIconWidth -12); //20 is the padding
+    euccObj.iconHeight = parseInt(jQuery(".eucc-closeicon").height());
+    euccObj.iconMargin = parseInt((jQuery(".eucc-container").height() - euccObj.iconHeight)/2);
+    euccObj.sectionHeight = parseInt(jQuery("#eu-cookie-compliance").height());
+    euccObj.fixedNavbar = false;
 }
 
-jQuery("#eu-cookie-compliance").show(); // temp
-
-
-/* code to hide the notice on click */
-    jQuery(".eucc-closeicon").click(function () {
+function euccCloseBanner() {
+    
     jQuery("#eu-cookie-compliance").remove();
-    });
-};
+    
+    if (euccObj.fixedNavbar) {jQuery("#navbar.fixed-top").css('margin-top',0);}
+    
+    if (euccObj.requireAccept == "acceptance"){EuccSetCookie("eucookiecompliance",'accepted',365);}
+    
+}
 
 /* code to hide the notice and save cookie if acceptance needed */
 jQuery(document).ready(function() {
-    jQuery(".eucc-closeicon").click(function () {
-    jQuery("#eu-cookie-compliance").remove();
-    EuccSetCookie("eucookiecompliance",'accepted',365);
-    });
+    jQuery(".eucc-closeicon").click(function() {euccCloseBanner();});
 });
 
-// if bar isnt going to show make the following functions not run without js failing
+// call the following from the other function
 
 function euccSetWidth(){
-    var containerWidth = jQuery(".eucc-container").width();
-    var closeIconWidth = jQuery(".eucc-closeicon").width();
-    var paraWidth = jQuery(".eucc-p").width();
-    var newParaWidth = containerWidth - closeIconWidth -12; //20 is the padding
     
-    if (newParaWidth < paraWidth){ jQuery(".eucc-p").width(newParaWidth); }
+    if (euccObj.newParaWidth < euccObj.paraWidth){ jQuery(".eucc-p").width(euccObj.newParaWidth); }
     
-    var iconHeight = jQuery(".eucc-closeicon").height()
-    var iconMargin = (jQuery(".eucc-container").height() - iconHeight)/2;
-    
-    jQuery(".eucc-closeicon").css('margin-top',iconMargin + "px");
+    jQuery(".eucc-closeicon").css('margin-top',euccObj.iconMargin + "px");
     }
     
-function euccPosition(euccPos){ // perhaps call in the function that shows the section
+function euccPosition(euccPos){
     
     if(euccPos == "top-float" || euccPos == "bottom-float") {
-    
-        var sectionHeight = jQuery("#eu-cookie-compliance").height()
-    
+        
+        euccObj.fullWidth = true;
+        
         jQuery("#eu-cookie-compliance").addClass("eucc-float eucc-bgcolor"); // eucc-bgcolor is normal theme
         jQuery(".eucc-container").removeClass("eucc-bgcolor"); // remove the inner class bg
         
         if(euccPos == "top-float"){
-            floatPosition = "top";
-            if (jQuery("#navbar.fixed-top").length ) {jQuery("#navbar.fixed-top").css('margin-top',sectionHeight + "px"); }
+            if (jQuery("#navbar.fixed-top").length ) {
+                jQuery("#navbar.fixed-top").css('margin-top',euccObj.sectionHeight + "px"); 
+                euccObj.fixedNavbar = true;
+                }
+            jQuery('#site').prepend(jQuery('#eu-cookie-compliance'));
         }
-        if(euccPos == "bottom-float"){floatPosition = "bottom";}
+        if(euccPos == "bottom-float"){
+            jQuery('#site').append(jQuery('#eu-cookie-compliance'));
+        }
         
-        jQuery('#site').prepend(jQuery('#eu-cookie-compliance')); 
+         
     }
+    else {euccObj.fullWidth = false;}
     
     
 }
@@ -95,9 +112,8 @@ function euccPosition(euccPos){ // perhaps call in the function that shows the s
 function euccTheme(euccTheme){
     
     // a function or global to return weather float or not so the right class can be selected 
-    
-    addClassName = "#eu-cookie-compliance";
-    //addClassName = ".eucc-container";
+    if (euccObj.fullWidth) {addClassName = "#eu-cookie-compliance";}
+    else {addClassName = ".eucc-container";}
 
     if(euccTheme != 'std-flat'){
     jQuery(".eucc-container").removeClass("eucc-bgcolor");

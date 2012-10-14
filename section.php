@@ -23,21 +23,9 @@ class EUCookieCompliance extends PageLinesSection {
     
 
     function section_head(){ # Load the javascript and any associated variables.
-    
-        $devMode = ( ploption('eucc_DevMode', $this->oset) ) ? ploption('eucc_DevMode', $this->oset) : false;
-        
-        $customJs = ''; // initialise
-        
-        // perhaps include in validate variables function which alerts the user to problems?
-        if($devMode != 'True' || $devMode != 'False'){$devMode == 'False'; }
-        $customJs .= sprintf("var EuccDevMode = '%s';",$devMode);
         
         // Output user set JS variables and the header script
-        printf("<script type='text/javascript'>
-        %s
-        </script>
-        <script type='text/javascript' src='%s/eu-cookie-compliance.js?ver=2.0'></script>
-        ",$customJs,$this->base_url);
+        printf("<script type='text/javascript' src='%s/eu-cookie-compliance.js?ver=2.0'></script>",$this->base_url);
     }
 
     function section_template( $clone_id = null ) {
@@ -77,24 +65,17 @@ class EUCookieCompliance extends PageLinesSection {
         </div>
         ',$boxText, $closeIcon);
         
-        // after section js
-        
-        if($bannerPosition == 'top-float' || $bannerPosition == 'bottom-float') {
-            $customJs .= sprintf("euccPosition('%s');",$bannerPosition);
-            }
-        
-        if($bannerTheme) {
-            $customJs .= sprintf("euccTheme('%s');",$bannerTheme);
-            }    
-        
-        
+        // section js vars
+        $customJs .= sprintf('euccObj.devMode = "%s";',$devMode);
+        $customJs .= sprintf('euccObj.euccPos = "%s";',$bannerPosition);
+        $customJs .= sprintf('euccObj.euccTheme = "%s";',$bannerTheme);
+
         // Output user set JS variables
         printf("<script type='text/javascript'>
-        euccCheckCookie('%s');
         %s
-        euccSetWidth();
+        euccCheckCookie('%s');
         </script>
-        ",$acceptMode,$customJs);
+        ",$customJs,$acceptMode);
     }
     
     
