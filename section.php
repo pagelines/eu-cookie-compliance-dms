@@ -40,7 +40,9 @@ class EUCookieCompliance extends PageLinesSection {
         $bannerTheme = ( ploption('eucc_BannerTheme', $this->oset) ) ? ploption('eucc_BannerTheme', $this->oset) : "navbar-black";
         $customJs = '';
         
-        $PLVERSION =  explode(".",explode("-",CORE_VERSION)[0]);
+        $PLVERSION = explode("-",CORE_VERSION);
+        if(is_array($PLVERSION)){$PLVERSION = $PLVERSION[0];}
+        $PLVERSION =  explode(".",$PLVERSION);
         
         // If needed values arent set then notify user
         if(!$privacyPolicyLink && !$boxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
