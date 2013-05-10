@@ -1,5 +1,6 @@
 == Description ==
 EU Cookie Compliance displays a banner to new visitors telling them about your sites use of cookies and either taking their implied consent or requiring their acceptance based on your preference.
+
 The banner is a section and as such can be moved around your page and placed exactly where you want it. After a user has accepted (or seen it once) the banner will disappear only to be seen again in a years time (to allow your visitors to reconsider).
 
 = Features =
