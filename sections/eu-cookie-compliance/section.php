@@ -35,6 +35,9 @@ class EUCookieCompliance extends PageLinesSection {
         if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
 
 
+        if(pl_draft_mode()){
+            $euccDevMode = True;
+        }
 		// Start section
         
 		// a switch for later

@@ -40,7 +40,6 @@ for (i=0;i<ARRcookies.length;i++)
 }
 function EuccCheckCookie(requireAccept){
     var cookieconsent=EuccGetCookie("eucookiecompliance");
-    if (jQuery.getUrlVar("edtr") != 'on'){
         if ((cookieconsent == 'implied' || cookieconsent == 'accepted')){
             jQuery(".section-eu-cookie-compliance").remove();
           }
@@ -52,11 +51,6 @@ function EuccCheckCookie(requireAccept){
             EuccSetCookie("eucookiecompliance",'implied',365);
             }
           }
-    }
-    else{
-        jQuery(".section-eu-cookie-compliance").show();
-    }
-
 }
 
 /* code to hide the notice and save cookie if acceptance needed */
