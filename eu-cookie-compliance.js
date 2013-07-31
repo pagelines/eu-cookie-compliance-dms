@@ -42,7 +42,7 @@ function EuccCheckCookie(requireAccept){
     var cookieconsent=EuccGetCookie("eucookiecompliance");
     if (jQuery.getUrlVar("edtr") != 'on'){
         if ((cookieconsent == 'implied' || cookieconsent == 'accepted')){
-            jQuery(".section-eu-cookie-compliance").hide();
+            jQuery(".section-eu-cookie-compliance").remove();
           }
         else
           {
