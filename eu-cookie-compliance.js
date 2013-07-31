@@ -21,18 +21,25 @@ for (i=0;i<ARRcookies.length;i++)
   }
 }
 function EuccCheckCookie(requireAccept){
-var cookieconsent=EuccGetCookie("eucookiecompliance");
-if (cookieconsent == 'implied' || cookieconsent == 'accepted'){
-	jQuery("#eu-cookie-compliance").remove();
-  }
-else 
-  {
-	jQuery("#eu-cookie-compliance").show();
-	
-	if (requireAccept == 'implied'){
-    EuccSetCookie("eucookiecompliance",'implied',365);
-	}
-  }
+    var cookieconsent=EuccGetCookie("eucookiecompliance");
+        alert(jQuery("#PageLinesToolbox").length)
+    if (jQuery("#PageLinesToolbox").length > 0){
+        if ((cookieconsent == 'implied' || cookieconsent == 'accepted')){
+            jQuery(".section-eu-cookie-compliance").hide();
+          }
+        else
+          {
+            jQuery(".section-eu-cookie-compliance").show();
+
+            if (requireAccept == 'implied'){
+            EuccSetCookie("eucookiecompliance",'implied',365);
+            }
+          }
+    }
+    else{
+        jQuery(".section-eu-cookie-compliance").show();
+    }
+
 }
 
 /* code to hide the notice and save cookie if acceptance needed */
