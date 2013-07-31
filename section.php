@@ -24,7 +24,7 @@ class EUCookieCompliance extends PageLinesSection {
     function section_template() {
 	
 		//set variables for ease
-        $euccBoxText = ( $this->opt('eucc_BoxText', $this->oset) ) ? $this->opt('eucc_BoxText', $this->oset) : false;
+        $euccBoxText = ( $this->opt('eucc_BoxText', $this->oset) ) ? $this->opt('eucc_BoxText', $this->oset) : 'This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a class="alert-link" href="<?php echo $euccPrivacyPolicyLink; ?>">Find out more here.</a>';
         $euccPrivacyPolicyLink = ( $this->opt('eucc_PrivacyPolicyLink', $this->oset) ) ? $this->opt('eucc_PrivacyPolicyLink', $this->oset) : false;
         $euccAcceptMode = ( $this->opt('eucc_RequireAccept', $this->oset) ) ? $this->opt('eucc_RequireAccept', $this->oset) : 'implied';
         $euccDevMode = ( $this->opt('eucc_DevMode', $this->oset) ) ? $this->opt('eucc_DevMode', $this->oset) : false;
@@ -41,24 +41,17 @@ class EUCookieCompliance extends PageLinesSection {
 		
 
 
-        if ($euccRequireAccept) {$euccCloseButton = '<button type="button" class="btn btn-small btn-success eucc-accept-cookies eucc-hidebutton"><span data-sync="eucc_AcceptButtonText">'.$euccAcceptButtonText.'</span></button>';}
+        if ($euccRequireAccept) {$euccCloseButton = '<button type="button" class="btn btn-small btn-warning" data-dismiss="alert"><span data-sync="eucc_AcceptButtonText">'.$euccAcceptButtonText.'</span></button>';}
         else{ $euccCloseButton = '<button type="button" class="close" data-dismiss="alert">&times;</button>'; } // if implied or custom button output image
         
         // start output
         ?>
-        <div class="alert alert-block">
-        <?php print $euccCloseButton; ?>
-        <p data-sync="eucc_BoxText">
-        <?php
-
-        if ($euccBoxText){
-            printf($euccBoxText);
-        }
-        else{
-            ?>
-            This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a href="<?php echo $euccPrivacyPolicyLink; ?>">Find out more here.</a><?php
-        }
-?></p></div>
+        <div class="alert alert-block alert-info">
+            <?php print($euccCloseButton); ?>
+            <span data-sync="eucc_BoxText">
+                <?php print($euccBoxText); ?>
+            </span>
+        </div>
         
         <?php if(!$euccDevMode){ ?><script type='text/javascript'>EuccCheckCookie('<?php echo $euccAcceptMode; ?>');</script><?php } //output script variable
     }

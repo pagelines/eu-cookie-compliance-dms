@@ -34,17 +34,10 @@ else
 	}
   }
 }
-/* code to hide the notice on click */
-jQuery(document).ready(function() {
-	jQuery(".eucc-closeicon").click(function () {
-	jQuery("#eu-cookie-compliance").remove();
-	});
-});
 
 /* code to hide the notice and save cookie if acceptance needed */
 jQuery(document).ready(function() {
 	jQuery(".eucc-hidebutton").click(function () {
-	jQuery("#eu-cookie-compliance").remove();
 	EuccSetCookie("eucookiecompliance",'accepted',365);
 	});
 });
