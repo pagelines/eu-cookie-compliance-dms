@@ -26,46 +26,31 @@ class EUCookieCompliance extends PageLinesSection {
 		//set variables for ease
         $euccBoxText = ( $this->opt('eucc_BoxText', $this->oset) ) ? $this->opt('eucc_BoxText', $this->oset) : false;
         $euccPrivacyPolicyLink = ( $this->opt('eucc_PrivacyPolicyLink', $this->oset) ) ? $this->opt('eucc_PrivacyPolicyLink', $this->oset) : false;
-        $euccCloseButtonImage = ( $this->opt('eucc_CloseButtonImage', $this->oset) ) ? $this->opt('eucc_CloseButtonImage', $this->oset) : false;
         $euccAcceptMode = ( $this->opt('eucc_RequireAccept', $this->oset) ) ? $this->opt('eucc_RequireAccept', $this->oset) : 'implied';
         $euccDevMode = ( $this->opt('eucc_DevMode', $this->oset) ) ? $this->opt('eucc_DevMode', $this->oset) : false;
 		$euccAcceptButtonText = ( $this->opt('eucc_AcceptButtonText', $this->oset) ) ? $this->opt('eucc_AcceptButtonText', $this->oset) : "I Accept";
-		$euccButtonPosition = ( $this->opt('eucc_ButtonPosition', $this->oset) ) ? $this->opt('eucc_ButtonPosition', $this->oset) : "top-right";
 		
 		// If needed values arent set then notify user
         if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
-		
+
+
 		// Start section
-		
-		// define the close button (or trigger generation later)
-        $euccCustomCloseButton = true;
-  
-        if(!$euccCloseButtonImage){
-        $euccCloseButtonImage = $this->base_url.'/close.png';
-        $euccCustomCloseButton = false;
-        }
         
 		// a switch for later
         if($euccAcceptMode == 'acceptance'){ $euccRequireAccept = true; } else{ $euccRequireAccept = false;}
 		
-		// add a class for the bottom-center layout mode
-		if ($euccButtonPosition == 'bottom-center'){$euccExtraButtonClass ='eucc-ownline';}
-		else {$euccExtraButtonClass ='';}
-      
-	  
-		// set the close button variable depending on options
-		
-		//
-		//if ($euccButtonPosition = 'center-right') {$euccCloseButton = '<span class="eucc-hidebutton eucc-center-right" style="background-image:url(\''.$euccCloseButtonImage.'\');"></span>';}
-        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<button type="button" class="btn btn-small btn-success eucc-accept-cookies eucc-hidebutton"><span data-sync="eucc_AcceptButtonText">'.$euccAcceptButtonText.'</span></button>';}
-        else{ $euccCloseButton = '<i class="icon-remove eucc-hidebutton"></i>'; } // if implied or custom button output image
+
+
+        if ($euccRequireAccept) {$euccCloseButton = '<button type="button" class="btn btn-small btn-success eucc-accept-cookies eucc-hidebutton"><span data-sync="eucc_AcceptButtonText">'.$euccAcceptButtonText.'</span></button>';}
+        else{ $euccCloseButton = '<button type="button" class="close" data-dismiss="alert">&times;</button>'; } // if implied or custom button output image
         
         // start output
-        ?><p><?php
-		
-		if($euccButtonPosition == 'top-right' || $euccButtonPosition == 'center-right') {echo $euccCloseButton;}
+        ?>
+        <div class="alert alert-block">
+        <?php print $euccCloseButton; ?>
+        <p data-sync="eucc_BoxText">
+        <?php
 
-        ?><span class="eucc-main-text" data-sync="eucc_BoxText"><?php
         if ($euccBoxText){
             printf($euccBoxText);
         }
@@ -73,8 +58,7 @@ class EUCookieCompliance extends PageLinesSection {
             ?>
             This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a href="<?php echo $euccPrivacyPolicyLink; ?>">Find out more here.</a><?php
         }
-		if($euccButtonPosition == 'bottom-right' || $euccButtonPosition == 'bottom-center') {echo $euccCloseButton;}
-         ?></span></p>
+?></p></div>
         
         <?php if(!$euccDevMode){ ?><script type='text/javascript'>EuccCheckCookie('<?php echo $euccAcceptMode; ?>');</script><?php } //output script variable
     }
@@ -97,12 +81,6 @@ class EUCookieCompliance extends PageLinesSection {
                     'title'         => 'Cookie information Link',
                     'shortexp'        => 'The link to your privacy policy or page where you fully describe your use and the implication of cookies (used with the default text)',
                 ),
-                'eucc_CloseButtonImage'     => array(
-                    'type'             => 'image_upload',
-                    'inputlabel'    => 'close/hide image',
-                    'title'         => 'Replace the close button with your own image (optional)',
-                    'shortexp'        => 'This will be used for the visitor to hide the message (implied consent) or replace the accept button (acceptance). Unless your message spans multiple lines the max size is 23px in height',
-                ),
                 'eucc_RequireAccept'     => array(
                     'type'             => 'select',
                     'inputlabel'    => 'Mode',
@@ -114,19 +92,6 @@ class EUCookieCompliance extends PageLinesSection {
                                         ), 
                     'shortexp'        => 'You can either show the banner once and if the user takes no action, assume implied consent or you can require the user actually consent to remove the banner.',
                 ),
-				'eucc_ButtonPosition' => array(
-					'default' 		=> 'top-right',
-					'type' 			=> 'select',
-					'selectvalues' => array(
-						'top-right' 		=> array('name' => 'Top Right (default)'),
-						//'center-right' 		=> array('name' => 'Center Right'), # future
-						'bottom-right' 		=> array('name' => 'Bottom Right'),
-						'bottom-center' 		=> array('name' => 'Bottom Center'),						
-					),
-					'inputlabel' 	=> 'Position',
-					'title' 		=> 'Button Position',
-					'shortexp' 		=> 'Choose where you want the button to display on your banner (this mainly effects multi-line banners)',
-				),
 				'eucc_AcceptButtonText'     => array(
                     'type'             => 'text',
                     'inputlabel'    => 'Accept button text',
