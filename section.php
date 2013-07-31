@@ -17,20 +17,20 @@
 class EUCookieCompliance extends PageLinesSection {    
 
     function section_head(){ # Load the javascript and any associated variables.
-    $euccDevMode = ( ploption('eucc_DevMode', $this->oset) ) ? ploption('eucc_DevMode', $this->oset) : false;
+    $euccDevMode = ( $this->opt('eucc_DevMode', $this->oset) ) ? $this->opt('eucc_DevMode', $this->oset) : false;
             if(!$euccDevMode){ ?> <script type='text/javascript' src='<?php echo $this->base_url;?>/eu-cookie-compliance.js'></script><?php }
         }
 
-    function section_template( $clone_id = null ) {
+    function section_template() {
 	
 		//set variables for ease
-        $euccBoxText = ( ploption('eucc_BoxText', $this->oset) ) ? ploption('eucc_BoxText', $this->oset) : false;
-        $euccPrivacyPolicyLink = ( ploption('eucc_PrivacyPolicyLink', $this->oset) ) ? ploption('eucc_PrivacyPolicyLink', $this->oset) : false;
-        $euccCloseButtonImage = ( ploption('eucc_CloseButtonImage', $this->oset) ) ? ploption('eucc_CloseButtonImage', $this->oset) : false;
-        $euccAcceptMode = ( ploption('eucc_RequireAccept', $this->oset) ) ? ploption('eucc_RequireAccept', $this->oset) : 'implied';
-        $euccDevMode = ( ploption('eucc_DevMode', $this->oset) ) ? ploption('eucc_DevMode', $this->oset) : false;
-		$euccAcceptButtonText = ( ploption('eucc_AcceptButtonText', $this->oset) ) ? ploption('eucc_AcceptButtonText', $this->oset) : "I Accept";
-		$euccButtonPosition = ( ploption('eucc_ButtonPosition', $this->oset) ) ? ploption('eucc_ButtonPosition', $this->oset) : "top-right";
+        $euccBoxText = ( $this->opt('eucc_BoxText', $this->oset) ) ? $this->opt('eucc_BoxText', $this->oset) : false;
+        $euccPrivacyPolicyLink = ( $this->opt('eucc_PrivacyPolicyLink', $this->oset) ) ? $this->opt('eucc_PrivacyPolicyLink', $this->oset) : false;
+        $euccCloseButtonImage = ( $this->opt('eucc_CloseButtonImage', $this->oset) ) ? $this->opt('eucc_CloseButtonImage', $this->oset) : false;
+        $euccAcceptMode = ( $this->opt('eucc_RequireAccept', $this->oset) ) ? $this->opt('eucc_RequireAccept', $this->oset) : 'implied';
+        $euccDevMode = ( $this->opt('eucc_DevMode', $this->oset) ) ? $this->opt('eucc_DevMode', $this->oset) : false;
+		$euccAcceptButtonText = ( $this->opt('eucc_AcceptButtonText', $this->oset) ) ? $this->opt('eucc_AcceptButtonText', $this->oset) : "I Accept";
+		$euccButtonPosition = ( $this->opt('eucc_ButtonPosition', $this->oset) ) ? $this->opt('eucc_ButtonPosition', $this->oset) : "top-right";
 		
 		// If needed values arent set then notify user
         if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
