@@ -13,5 +13,10 @@ Place it where you want on your page
 This section is designed only to *help you meet EU regulations* and *does not ensure you are compliant* (please see <a href="http://www.ico.gov.uk/for_organisations/privacy_and_electronic_communications/the_guide/cookies.aspx">ICO</a> for more details). Each site has different requirements based on what they store in cookies and you will need to have a page explaining the implications of cookies in more detail.
  
 == Changelog ==
+= 2.0 (DMS Ready) =
+* Now uses bootstrap alerts for the banner
+* Removed old options to acomindate this (like adding your own close image)
+* Different colour themes
+* Live edit in DMS and the section will always show whilst in the editor.
 = 1.0 =
 * Initial release.
