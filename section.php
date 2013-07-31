@@ -24,11 +24,12 @@ class EUCookieCompliance extends PageLinesSection {
     function section_template() {
 	
 		//set variables for ease
-        $euccBoxText = ( $this->opt('eucc_BoxText', $this->oset) ) ? $this->opt('eucc_BoxText', $this->oset) : 'This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a class="alert-link" href="<?php echo $euccPrivacyPolicyLink; ?>">Find out more here.</a>';
         $euccPrivacyPolicyLink = ( $this->opt('eucc_PrivacyPolicyLink', $this->oset) ) ? $this->opt('eucc_PrivacyPolicyLink', $this->oset) : false;
+        $euccBoxText = ( $this->opt('eucc_BoxText', $this->oset) ) ? $this->opt('eucc_BoxText', $this->oset) : 'This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a class="alert-link" href="'.$euccPrivacyPolicyLink.'">Find out more here.</a>';
         $euccAcceptMode = ( $this->opt('eucc_RequireAccept', $this->oset) ) ? $this->opt('eucc_RequireAccept', $this->oset) : 'implied';
         $euccDevMode = ( $this->opt('eucc_DevMode', $this->oset) ) ? $this->opt('eucc_DevMode', $this->oset) : false;
 		$euccAcceptButtonText = ( $this->opt('eucc_AcceptButtonText', $this->oset) ) ? $this->opt('eucc_AcceptButtonText', $this->oset) : "I Accept";
+        $eucc_ThemeColor = ( $this->opt('eucc_ThemeColor', $this->oset) ) ? $this->opt('eucc_ThemeColor', $this->oset) : "warning";
 		
 		// If needed values arent set then notify user
         if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
@@ -39,14 +40,19 @@ class EUCookieCompliance extends PageLinesSection {
 		// a switch for later
         if($euccAcceptMode == 'acceptance'){ $euccRequireAccept = true; } else{ $euccRequireAccept = false;}
 		
+        // BECAUSE NOT ALL BOOTSTRAP COLOURS MATCH
+        if ($eucc_ThemeColor == 'error'){
+            $eucc_ThemeButtonColor = 'important';
+        }else{
+            $eucc_ThemeButtonColor = $eucc_ThemeColor;
+        }
 
-
-        if ($euccRequireAccept) {$euccCloseButton = '<button type="button" class="btn btn-small btn-warning" data-dismiss="alert"><span data-sync="eucc_AcceptButtonText">'.$euccAcceptButtonText.'</span></button>';}
+        if ($euccRequireAccept) {$euccCloseButton = sprintf('<button type="button" class="btn btn-small btn-%s" data-dismiss="alert"><span data-sync="eucc_AcceptButtonText">%s</span></button>',$eucc_ThemeButtonColor,$euccAcceptButtonText);}
         else{ $euccCloseButton = '<button type="button" class="close" data-dismiss="alert">&times;</button>'; } // if implied or custom button output image
         
         // start output
         ?>
-        <div class="alert alert-block alert-info">
+        <div class="alert alert-block alert-<?php print $eucc_ThemeColor; ?>">
             <?php print($euccCloseButton); ?>
             <span data-sync="eucc_BoxText">
                 <?php print($euccBoxText); ?>
@@ -84,6 +90,18 @@ class EUCookieCompliance extends PageLinesSection {
                                 'acceptance'    => array('name' => 'Required consent'), 
                                         ), 
                     'shortexp'        => 'You can either show the banner once and if the user takes no action, assume implied consent or you can require the user actually consent to remove the banner.',
+                ),
+                'eucc_ThemeColor'     => array(
+                    'type'             => 'select',
+                    'inputlabel'    => 'Theme Color',
+                    'title'         => 'Choose a theme color for the banner',
+                    'default'    => 'implied_consent',
+                    'selectvalues'    => array(
+                        'warning'    => array('name' => 'Yellow'),
+                        'success'    => array('name' => 'Green'),
+                        'error'    => array('name' => 'Red'),
+                        'info'    => array('name' => 'Blue'),
+                    ),
                 ),
 				'eucc_AcceptButtonText'     => array(
                     'type'             => 'text',
