@@ -65,3 +65,10 @@ jQuery(document).ready(function() {
 	EuccSetCookie("eucookiecompliance",'accepted',365);
 	});
 });
+
+/* code to hide the notice on click */
+jQuery(document).ready(function() {
+    jQuery(".section-eu-cookie-compliance .close").click(function () {
+        jQuery(".section-eu-cookie-compliance").remove();
+    });
+});
