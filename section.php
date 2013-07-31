@@ -103,7 +103,7 @@ class EUCookieCompliance extends PageLinesSection {
                     'shortexp'        => 'This will be used for the visitor to hide the message (implied consent) or replace the accept button (acceptance). Unless your message spans multiple lines the max size is 23px in height',
                 ),
                 'eucc_RequireAccept'     => array(
-                    'type'             => 'radio',
+                    'type'             => 'select',
                     'inputlabel'    => 'Mode',
                     'title'         => 'Require user to accept to hide or take implied consent',
                     'default'    => 'implied_consent',
@@ -115,7 +115,7 @@ class EUCookieCompliance extends PageLinesSection {
                 ),
 				'eucc_ButtonPosition' => array(
 					'default' 		=> 'top-right',
-					'type' 			=> 'radio',
+					'type' 			=> 'select',
 					'selectvalues' => array(
 						'top-right' 		=> array('name' => 'Top Right (default)'),
 						//'center-right' 		=> array('name' => 'Center Right'), # future
