@@ -57,7 +57,7 @@ class EUCookieCompliance extends PageLinesSection {
 		
 		//
 		//if ($euccButtonPosition = 'center-right') {$euccCloseButton = '<span class="eucc-hidebutton eucc-center-right" style="background-image:url(\''.$euccCloseButtonImage.'\');"></span>';}
-        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<span data-sync="eucc_AcceptButtonText" class="eucc-accept-cookies eucc-hidebutton '.$euccExtraButtonClass.'">'.$euccAcceptButtonText.'</span>';}
+        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<button type="button" class="btn btn-small btn-success eucc-accept-cookies eucc-hidebutton"><span data-sync="eucc_AcceptButtonText">'.$euccAcceptButtonText.'</span></button>';}
         else{ $euccCloseButton = '<span class="eucc-hidebutton '.$euccExtraButtonClass.'"><img class="eucc-closeicon" src="'.$euccCloseButtonImage.'"/></span>'; } // if implied or custom button output image
         
         // start output
