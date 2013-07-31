@@ -6,6 +6,24 @@ var c_value=escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCStri
 document.cookie=c_name + "=" + c_value;
 }
 
+/* Get URL arguments credit: ErickPetru, source: http://stackoverflow.com/questions/6001839/check-whether-a-url-variable-is-set-using-jquery*/
+jQuery.extend({
+    getUrlVars: function(){
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for(var i = 0; i < hashes.length; i++)
+        {
+            hash = hashes[i].split('=');
+            vars.push(hash[0]);
+            vars[hash[0]] = hash[1];
+        }
+        return vars;
+    },
+    getUrlVar: function(name){
+        return jQuery.getUrlVars()[name];
+    }
+});
+
 function EuccGetCookie(c_name)
 {
 var i,x,y,ARRcookies=document.cookie.split(";");
@@ -22,8 +40,7 @@ for (i=0;i<ARRcookies.length;i++)
 }
 function EuccCheckCookie(requireAccept){
     var cookieconsent=EuccGetCookie("eucookiecompliance");
-        alert(jQuery("#PageLinesToolbox").length)
-    if (jQuery("#PageLinesToolbox").length > 0){
+    if (jQuery.getUrlVar("edtr") != 'on'){
         if ((cookieconsent == 'implied' || cookieconsent == 'accepted')){
             jQuery(".section-eu-cookie-compliance").hide();
           }
