@@ -1,18 +1,18 @@
 == Description ==
 EU Cookie Compliance displays a banner to new visitors telling them about your sites use of cookies and either taking their implied consent or requiring their acceptance based on your preference.
+
 The banner is a section and as such can be moved around your page and placed exactly where you want it. After a user has accepted (or seen it once) the banner will disappear only to be seen again in a years time (to allow your visitors to reconsider).
 
-=== Options ===
-* Define whether to use required or implied acceptance
-* Change the banner text
-* Place it where you want on your page
-* Make the banner stay static on the top or bottom of the screenw ith new float options.
+
+= Features =
+Define whether to use required or implied acceptance
+
+Change the banner text
+
+Place it where you want on your page
 
 This section is designed only to *help you meet EU regulations* and *does not ensure you are compliant* (please see <a href="http://www.ico.gov.uk/for_organisations/privacy_and_electronic_communications/the_guide/cookies.aspx">ICO</a> for more details). Each site has different requirements based on what they store in cookies and you will need to have a page explaining the implications of cookies in more detail.
 
-=== Planned improvements ===
-(if your setup requires these please only buy the section when they are included. In the meantime send me an email to let me knows its important!)
-* Display Banner only to EU visitors
  
 == Changelog ==
 = 2.0 =
