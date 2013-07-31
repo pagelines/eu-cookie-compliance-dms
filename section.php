@@ -11,6 +11,7 @@
 	External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/
 	Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
 	Cloning: false
+    V3: true
 */
 
 class EUCookieCompliance extends PageLinesSection {    
