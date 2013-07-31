@@ -57,14 +57,15 @@ class EUCookieCompliance extends PageLinesSection {
 		
 		//
 		//if ($euccButtonPosition = 'center-right') {$euccCloseButton = '<span class="eucc-hidebutton eucc-center-right" style="background-image:url(\''.$euccCloseButtonImage.'\');"></span>';}
-        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<span class="eucc-accept-cookies eucc-hidebutton '.$euccExtraButtonClass.'">'.$euccAcceptButtonText.'</span>';}
+        if ($euccRequireAccept && !$euccCustomCloseButton) {$euccCloseButton = '<span data-sync="eucc_AcceptButtonText" class="eucc-accept-cookies eucc-hidebutton '.$euccExtraButtonClass.'">'.$euccAcceptButtonText.'</span>';}
         else{ $euccCloseButton = '<span class="eucc-hidebutton '.$euccExtraButtonClass.'"><img class="eucc-closeicon" src="'.$euccCloseButtonImage.'"/></span>'; } // if implied or custom button output image
         
         // start output
         ?><p><?php
 		
 		if($euccButtonPosition == 'top-right' || $euccButtonPosition == 'center-right') {echo $euccCloseButton;}
-		
+
+        ?><span class="eucc-main-text" data-sync="eucc_BoxText"><?php
         if ($euccBoxText){
             printf($euccBoxText);
         }
@@ -73,7 +74,7 @@ class EUCookieCompliance extends PageLinesSection {
             This site uses cookies. By continuing to browse the site you are agreeing to our use of cookies. <a href="<?php echo $euccPrivacyPolicyLink; ?>">Find out more here.</a><?php
         }
 		if($euccButtonPosition == 'bottom-right' || $euccButtonPosition == 'bottom-center') {echo $euccCloseButton;}
-         ?></p>
+         ?></span></p>
         
         <?php if(!$euccDevMode){ ?><script type='text/javascript'>EuccCheckCookie('<?php echo $euccAcceptMode; ?>');</script><?php } //output script variable
     }
