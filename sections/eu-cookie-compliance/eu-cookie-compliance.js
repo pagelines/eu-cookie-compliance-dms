@@ -38,8 +38,16 @@ for (i=0;i<ARRcookies.length;i++)
     }
   }
 }
+
+function EuccDevModeOn(){
+    alert(jQuery(".section-eu-cookie-compliance .alert").hasClass('eucc-devmode'));
+    return jQuery(".section-eu-cookie-compliance .alert").hasClass('eucc-devmode');
+}
+
 function EuccCheckCookie(requireAccept){
     var cookieconsent=EuccGetCookie("eucookiecompliance");
+
+    if (!EuccDevModeOn()){
         if ((cookieconsent == 'implied' || cookieconsent == 'accepted')){
             jQuery(".section-eu-cookie-compliance").remove();
           }
@@ -51,18 +59,29 @@ function EuccCheckCookie(requireAccept){
             EuccSetCookie("eucookiecompliance",'implied',365);
             }
           }
+    }
+    else{
+        jQuery(".section-eu-cookie-compliance").show();
+    }
+
 }
 
 /* code to hide the notice and save cookie if acceptance needed */
 jQuery(document).ready(function() {
-	jQuery(".eucc-hidebutton").click(function () {
+	jQuery(".eucc-accept").click(function () {
 	EuccSetCookie("eucookiecompliance",'accepted',365);
 	});
 });
 
 /* code to hide the notice on click */
 jQuery(document).ready(function() {
-    jQuery(".section-eu-cookie-compliance .close").click(function () {
-        jQuery(".section-eu-cookie-compliance").remove();
+    jQuery(".eucc-close").click(function () {
+        if (EuccDevModeOn){
+            jQuery(".section-eu-cookie-compliance").hide();
+            setTimeout(function() { jQuery(".section-eu-cookie-compliance").show(); }, 800);
+        }
+        else{
+            jQuery(".section-eu-cookie-compliance").remove();
+        }
     });
 });
