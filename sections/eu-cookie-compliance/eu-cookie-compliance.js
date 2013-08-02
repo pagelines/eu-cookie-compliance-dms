@@ -39,15 +39,10 @@ for (i=0;i<ARRcookies.length;i++)
   }
 }
 
-function EuccDevModeOn(){
-    alert(jQuery(".section-eu-cookie-compliance .alert").hasClass('eucc-devmode'));
-    return jQuery(".section-eu-cookie-compliance .alert").hasClass('eucc-devmode');
-}
-
 function EuccCheckCookie(requireAccept){
     var cookieconsent=EuccGetCookie("eucookiecompliance");
 
-    if (!EuccDevModeOn()){
+    if (!EuccDevMode){
         if ((cookieconsent == 'implied' || cookieconsent == 'accepted')){
             jQuery(".section-eu-cookie-compliance").remove();
           }
@@ -76,7 +71,7 @@ jQuery(document).ready(function() {
 /* code to hide the notice on click */
 jQuery(document).ready(function() {
     jQuery(".eucc-close").click(function () {
-        if (EuccDevModeOn){
+        if (EuccDevMode){
             jQuery(".section-eu-cookie-compliance").hide();
             setTimeout(function() { jQuery(".section-eu-cookie-compliance").show(); }, 800);
         }

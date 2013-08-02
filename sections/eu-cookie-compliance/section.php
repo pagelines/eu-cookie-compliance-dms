@@ -38,13 +38,6 @@ class EUCookieCompliance extends PageLinesSection {
         if(pl_draft_mode()){
             $euccDevMode = True;
         }
-
-        if ($euccDevMode){
-            $devmodeclass = 'eucc-devmode';
-        }
-        else{
-            $devmodeclass = '';
-        }
 		// Start section
         
 		// a switch for later
@@ -62,14 +55,17 @@ class EUCookieCompliance extends PageLinesSection {
         
         // start output
 
-        printf('<div class="alert alert-block alert-%s %s">',$eucc_ThemeColor, $devmodeclass); ?>
+        printf('<div class="alert alert-block alert-%s">',$eucc_ThemeColor); ?>
             <?php print($euccCloseButton); ?>
             <span data-sync="eucc_BoxText">
                 <?php print($euccBoxText); ?>
             </span>
         </div>
         
-        <script type='text/javascript'>EuccCheckCookie('<?php echo $euccAcceptMode; ?>');</script><?php
+        <script type='text/javascript'>
+            <?php if ($euccDevMode){ print('var EuccDevMode=true;'); } else{ print('var EuccDevMode=false;'); }?>
+            EuccCheckCookie('<?php echo $euccAcceptMode; ?>');
+        </script><?php
     }
     
 	
