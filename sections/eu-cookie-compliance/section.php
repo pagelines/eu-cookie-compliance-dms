@@ -35,6 +35,9 @@ class EUCookieCompliance extends PageLinesSection {
         if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
 
 
+        if(pl_draft_mode()){
+            $euccDevMode = True;
+        }
 		// Start section
         
 		// a switch for later
@@ -47,19 +50,22 @@ class EUCookieCompliance extends PageLinesSection {
             $eucc_ThemeButtonColor = $eucc_ThemeColor;
         }
 
-        if ($euccRequireAccept) {$euccCloseButton = sprintf('<button type="button" class="btn btn-small btn-%s" data-dismiss="alert"><span data-sync="eucc_AcceptButtonText">%s</span></button>',$eucc_ThemeButtonColor,$euccAcceptButtonText);}
-        else{ $euccCloseButton = '<button type="button" class="close" data-dismiss="alert">&times;</button>'; } // if implied or custom button output image
+        if ($euccRequireAccept) {$euccCloseButton = sprintf('<button type="button" class="btn btn-small btn-%s eucc-close eucc-accept"><span data-sync="eucc_AcceptButtonText">%s</span></button>',$eucc_ThemeButtonColor,$euccAcceptButtonText);}
+        else{ $euccCloseButton = '<button type="button" class="close eucc-close">&times;</button>'; } // if implied or custom button output image
         
         // start output
-        ?>
-        <div class="alert alert-block alert-<?php print $eucc_ThemeColor; ?>">
+
+        printf('<div class="alert alert-block alert-%s">',$eucc_ThemeColor); ?>
             <?php print($euccCloseButton); ?>
             <span data-sync="eucc_BoxText">
                 <?php print($euccBoxText); ?>
             </span>
         </div>
         
-        <?php if(!$euccDevMode){ ?><script type='text/javascript'>EuccCheckCookie('<?php echo $euccAcceptMode; ?>');</script><?php } //output script variable
+        <script type='text/javascript'>
+            <?php if ($euccDevMode){ print('var EuccDevMode=true;'); } else{ print('var EuccDevMode=false;'); }?>
+            EuccCheckCookie('<?php echo $euccAcceptMode; ?>');
+        </script><?php
     }
     
 	

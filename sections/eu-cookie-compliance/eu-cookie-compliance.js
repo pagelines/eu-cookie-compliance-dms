@@ -38,9 +38,11 @@ for (i=0;i<ARRcookies.length;i++)
     }
   }
 }
+
 function EuccCheckCookie(requireAccept){
     var cookieconsent=EuccGetCookie("eucookiecompliance");
-    if (jQuery.getUrlVar("edtr") != 'on'){
+
+    if (!EuccDevMode){
         if ((cookieconsent == 'implied' || cookieconsent == 'accepted')){
             jQuery(".section-eu-cookie-compliance").remove();
           }
@@ -61,7 +63,20 @@ function EuccCheckCookie(requireAccept){
 
 /* code to hide the notice and save cookie if acceptance needed */
 jQuery(document).ready(function() {
-	jQuery(".eucc-hidebutton").click(function () {
+	jQuery(".eucc-accept").click(function () {
 	EuccSetCookie("eucookiecompliance",'accepted',365);
 	});
+});
+
+/* code to hide the notice on click */
+jQuery(document).ready(function() {
+    jQuery(".eucc-close").click(function () {
+        if (EuccDevMode){
+            jQuery(".section-eu-cookie-compliance").hide();
+            setTimeout(function() { jQuery(".section-eu-cookie-compliance").show(); }, 800);
+        }
+        else{
+            jQuery(".section-eu-cookie-compliance").remove();
+        }
+    });
 });
