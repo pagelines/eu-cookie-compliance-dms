@@ -3,7 +3,7 @@
     Plugin Name: EU Cookie Compliance
 	Author: Ryan Varley
 	Author URI: http://ryanvarley.co.uk
-	Description: Displays a banner to new visitors about your sites use of cookies.
+	Description: EU Cookie Compliance displays a banner to new visitors telling them about your sites use of cookies and either taking their implied consent or requiring their acceptance based on your preference.
 	Class Name: EUCookieCompliance
 	Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
 	Compatibility: 2.3+
