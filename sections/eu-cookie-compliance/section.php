@@ -5,8 +5,6 @@
 	Author URI: http://ryanvarley.co.uk
 	Description: Displays a banner to new visitors about your sites use of cookies.
 	Class Name: EUCookieComplianceDMS
-	Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
-	Compatibility: 1.0
 	Version: 2.0
 	External: http://ryanvarley.co.uk/projects/pagelines/eu-cookie-compliance/
 	Demo: http://eucookiedemo.acometappears.com
