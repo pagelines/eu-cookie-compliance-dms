@@ -12,4 +12,5 @@
 	Demo: http://demo.ryanvarley.co.uk/eu-cookie-compliance/
 	Cloning: false
     V3: true
+    Filter: misc
 */

@@ -30,6 +30,7 @@ class EUCookieCompliance extends PageLinesSection {
         $euccDevMode = ( $this->opt('eucc_DevMode', $this->oset) ) ? $this->opt('eucc_DevMode', $this->oset) : false;
 		$euccAcceptButtonText = ( $this->opt('eucc_AcceptButtonText', $this->oset) ) ? $this->opt('eucc_AcceptButtonText', $this->oset) : "I Accept";
         $eucc_ThemeColor = ( $this->opt('eucc_ThemeColor', $this->oset) ) ? $this->opt('eucc_ThemeColor', $this->oset) : "warning";
+        $euccButtonPos = ( $this->opt('eucc_ButtonPos', $this->oset) ) ? $this->opt('eucc_ButtonPos', $this->oset) : "right";
 		
 		// If needed values arent set then notify user
         if(!$euccPrivacyPolicyLink && !$euccBoxText){ echo setup_section_notify( $this, 'If your using the default text you must set a link to your cookie information page' ); return;}
@@ -50,16 +51,20 @@ class EUCookieCompliance extends PageLinesSection {
             $eucc_ThemeButtonColor = $eucc_ThemeColor;
         }
 
-        if ($euccRequireAccept) {$euccCloseButton = sprintf('<button type="button" class="btn btn-small btn-%s eucc-close eucc-accept"><span data-sync="eucc_AcceptButtonText">%s</span></button>',$eucc_ThemeButtonColor,$euccAcceptButtonText);}
-        else{ $euccCloseButton = '<button type="button" class="close eucc-close">&times;</button>'; } // if implied or custom button output image
+        if($euccButtonPos == 'bottom'){ $euccButtonPosClass = 'eucc-bottom-float'; }
+        else{ $euccButtonPosClass = ''; }
+
+        if ($euccRequireAccept) {$euccCloseButton = sprintf('<button type="button" class="btn btn-small btn-%s eucc-close eucc-accept %s"><span data-sync="eucc_AcceptButtonText">%s</span></button>', $eucc_ThemeButtonColor, $euccButtonPosClass, $euccAcceptButtonText);}
+        else{ $euccCloseButton = sprintf('<button type="button" class="close eucc-close %s">&times;</button>', $euccButtonPosClass); } // if implied or custom button output image
         
         // start output
 
         printf('<div class="alert alert-block alert-%s">',$eucc_ThemeColor); ?>
-            <?php print($euccCloseButton); ?>
+            <?php if ($euccButtonPos == 'right'){ print($euccCloseButton); } ?>
             <span data-sync="eucc_BoxText">
                 <?php print($euccBoxText); ?>
             </span>
+            <?php if ($euccButtonPos == 'bottom'){ print($euccCloseButton); } ?>
         </div>
         
         <script type='text/javascript'>
@@ -101,7 +106,6 @@ class EUCookieCompliance extends PageLinesSection {
                     'type'             => 'select',
                     'inputlabel'    => 'Theme Color',
                     'title'         => 'Choose a theme color for the banner',
-                    'default'    => 'implied_consent',
                     'selectvalues'    => array(
                         'warning'    => array('name' => 'Yellow'),
                         'success'    => array('name' => 'Green'),
@@ -114,6 +118,15 @@ class EUCookieCompliance extends PageLinesSection {
                     'inputlabel'    => 'Accept button text',
                     'title'         => 'Accept button text (optional)',
                     'shortexp'        => 'The text that will display on the accept button when the \'acceptance\' mode has been selected',
+                ),
+                'eucc_ButtonPos'     => array(
+                    'type'             => 'select',
+                    'inputlabel'    => 'Button Position',
+                    'title'         => 'Keep the close button at the side or drop it below',
+                    'selectvalues'    => array(
+                        'right'    => array('name' => 'right'),
+                        'bottom'    => array('name' => 'bottom'),
+                    ),
                 ),
                 'eucc_DevMode'     => array(
                     'type'             => 'check',
