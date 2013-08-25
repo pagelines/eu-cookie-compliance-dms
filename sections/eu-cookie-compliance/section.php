@@ -4,7 +4,7 @@
 	Author: Ryan Varley
 	Author URI: http://ryanvarley.co.uk
 	Description: Displays a banner to new visitors about your sites use of cookies.
-	Class Name: EUCookieCompliance
+	Class Name: EUCookieComplianceDMS
 	Workswith: templates, main, header, morefoot, sidebar1, sidebar2, sidebar_wrap
 	Compatibility: 1.0
 	Version: 2.0
@@ -14,7 +14,7 @@
     V3: true
 */
 
-class EUCookieCompliance extends PageLinesSection {    
+class EUCookieComplianceDMS extends PageLinesSection {
 
     function section_head(){ # Load the javascript and any associated variables.
     $euccDevMode = ( $this->opt('eucc_DevMode', $this->oset) ) ? $this->opt('eucc_DevMode', $this->oset) : false;
